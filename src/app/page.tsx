@@ -9,7 +9,7 @@ export default function Home() {
       <header className="border-b">
         <div className="flex h-16 justify-between items-center px-4 sm:px-6 lg:px-8">
           <h1 className="text-xl font-bold">SmartPantry</h1>
-          <Link href="/">
+          <Link href="/dashboard">
             <Button>Entrar</Button>
           </Link>
         </div>
