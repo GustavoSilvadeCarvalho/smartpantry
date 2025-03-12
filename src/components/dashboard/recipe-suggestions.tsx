@@ -77,7 +77,7 @@ export function RecipeSuggestions() {
                 ))}
             </div>
             <div className="mt-4 text-center">
-                <Link href="/dashboard/recipes">
+                <Link href="/dashboard">
                     <Button variant="link" className="gap-1">
                         Ver todas as receitas
                         <ArrowRight className="h-4 w-4" />
