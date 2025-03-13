@@ -3,10 +3,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import { NextAuthOptions } from "next-auth";
 
 const prisma = new PrismaClient();
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -17,27 +18,27 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Credenciais inválidas");
+          return null;
         }
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
-        if (!user) throw new Error("Usuário não encontrado");
+        if (!user) return null;
 
         const isValid = await bcrypt.compare(
           credentials.password,
           user.password
         );
-        if (!isValid) throw new Error("Senha incorreta");
+        if (!isValid) return null;
 
         return { id: user.id, name: user.name, email: user.email };
       },
     }),
   ],
   session: {
-    strategy: "jwt" as const,
+    strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
