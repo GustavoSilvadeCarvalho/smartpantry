@@ -5,11 +5,23 @@ import { ExpiringItems } from "@/components/dashboard/expiring-items"
 import { RecipeSuggestions } from "@/components/dashboard/recipe-suggestions"
 import { categoriasDiferentes, quantidadeTotal } from "@/data/data"
 
-export default function DashboardPage() {
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
+import LogoutButton from "@/components/logoutButton"
+
+export default async function DashboardPage() {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+        redirect("/login");
+    }
+
     return (
         <div className="space-y-6 px-10">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+                <LogoutButton />
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
