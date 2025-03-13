@@ -7,7 +7,7 @@ import { Inter } from "next/font/google"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "PantryAI - Gerencie seus alimentos de forma inteligente",
+  title: "SmartPantry - Gerencie seus alimentos de forma inteligente",
   description: "Sistema de gerenciamento de mantimentos com notificações e sugestões de receitas",
 }
 
@@ -24,7 +24,7 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
-          storageKey="pantry-ai-theme"
+          storageKey="smartpantry-theme"
         >
           {children}
         </ThemeProvider>
