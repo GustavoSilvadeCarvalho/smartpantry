@@ -3,12 +3,13 @@ import { BarChart3, ShoppingCart, Package, AlertCircle } from "lucide-react"
 import { RecentActivity } from "@/components/dashboard/recent-activity"
 import { ExpiringItems } from "@/components/dashboard/expiring-items"
 import { RecipeSuggestions } from "@/components/dashboard/recipe-suggestions"
-import { categoriasDiferentes, quantidadeTotal } from "@/data/data"
+import { categoriasDiferentes } from "@/data/data"
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/logoutButton"
+import QuantidadeTotalItens from "@/components/quantidadeTotal"
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
@@ -21,7 +22,9 @@ export default async function DashboardPage() {
         <div className="space-y-6 px-10">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-                <LogoutButton />
+                <div className="flex items-center gap-4">
+                    <LogoutButton />
+                </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -31,7 +34,7 @@ export default async function DashboardPage() {
                         <Package className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{quantidadeTotal}</div>
+                        <QuantidadeTotalItens />
                         <p className="text-xs text-muted-foreground">+5 desde a semana passada</p>
                     </CardContent>
                 </Card>
@@ -99,6 +102,7 @@ export default async function DashboardPage() {
                     </CardContent>
                 </Card>
             </div>
+
         </div>
     )
 }
