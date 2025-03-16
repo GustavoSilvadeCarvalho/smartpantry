@@ -1,4 +1,3 @@
-// app/api/quantidadeItens/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
@@ -17,23 +16,21 @@ export async function GET() {
   }
 
   try {
-    const quantidadeTotal = await prisma.userItem.aggregate({
-      where: {
-        user_id: session.user.id,
+    const categorias = await prisma.item.findMany({
+      select: {
+        categoria: true,
       },
-      _sum: {
-        quantidade: true,
-      },
+      distinct: ["categoria"],
     });
 
     return NextResponse.json(
-      { quantidadeTotal: quantidadeTotal._sum.quantidade || 0 },
+      { categoriasDiferentes: categorias.length },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Erro ao buscar quantidade de itens:", error);
+    console.error("Erro ao buscar categorias:", error);
     return NextResponse.json(
-      { error: "Erro ao buscar quantidade de itens." },
+      { error: "Erro ao buscar categorias." },
       { status: 500 }
     );
   }

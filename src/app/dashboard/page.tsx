@@ -3,13 +3,13 @@ import { BarChart3, ShoppingCart, Package, AlertCircle } from "lucide-react"
 import { RecentActivity } from "@/components/dashboard/recent-activity"
 import { ExpiringItems } from "@/components/dashboard/expiring-items"
 import { RecipeSuggestions } from "@/components/dashboard/recipe-suggestions"
-import { categoriasDiferentes } from "@/data/data"
-
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/logoutButton"
 import QuantidadeTotalItens from "@/components/quantidadeTotal"
+import { SheetAdicionar } from "@/components/botaoAdicionar"
+import QuantidadeTotalCategorias from "@/components/quantidadeTotalCategorias"
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
@@ -23,6 +23,7 @@ export default async function DashboardPage() {
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
                 <div className="flex items-center gap-4">
+                    <SheetAdicionar />
                     <LogoutButton />
                 </div>
             </div>
@@ -54,7 +55,7 @@ export default async function DashboardPage() {
                         <BarChart3 className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{categoriasDiferentes}</div>
+                        <QuantidadeTotalCategorias />
                         <p className="text-xs text-muted-foreground">Tipos de produtos</p>
                     </CardContent>
                 </Card>
@@ -74,7 +75,7 @@ export default async function DashboardPage() {
                 <Card className="col-span-4">
                     <CardHeader>
                         <CardTitle>Itens próximos do vencimento</CardTitle>
-                        <CardDescription>Itens que expiram nos próximos 15 dias</CardDescription>
+                        <CardDescription>Itens que expiram nos próximos dias</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <ExpiringItems />

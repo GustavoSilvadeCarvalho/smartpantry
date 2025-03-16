@@ -1,23 +1,25 @@
+//igual o quantiade total, mas para categorias
+
 "use client";
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
-export default function QuantidadeTotalItens() {
+export default function QuantidadeTotalCategorias() {
     const [quantidadeTotal, setQuantidadeTotal] = useState(0);
     const { data: session } = useSession();
 
     useEffect(() => {
         if (session?.user?.id) {
-            fetch("/api/quantidadeItens")
+            fetch("/api/categorias")
                 .then((response) => response.json())
                 .then((data) => {
-                    if (data.quantidadeTotal !== undefined) {
-                        setQuantidadeTotal(data.quantidadeTotal);
+                    if (data.categoriasDiferentes !== undefined) {
+                        setQuantidadeTotal(data.categoriasDiferentes);
                     }
                 })
                 .catch((error) => {
-                    console.error("Erro ao buscar quantidade de itens:", error);
+                    console.error("Erro ao buscar quantidade de categorias:", error);
                 });
         }
     }, [session]);
